@@ -41,7 +41,6 @@ function setup() {
     data.foreground = ocean(data.horizon, data.palette);
     data.sky = get_sky(params.sky, data.horizon, data.palette);
 
-    data.moon = moon(data.horizon, data.palette);
     data.buildings = place_buildings(data.composition, data.palette);
     data.reflection = reflections(data.buildings, data.foreground);
 
@@ -51,7 +50,6 @@ function setup() {
 function draw() {
     draw_from_data(data.sky);
     draw_from_data(data.foreground);
-    draw_from_data(data.moon);
     if ('buildings' in data) {
         draw_from_data(data.buildings);
         draw_from_data(data.reflection);

@@ -1,20 +1,19 @@
-var get_sky = function(name, horizon, colors) {
-    // select blues, yellows for the sky
-    var blues = color_sort(colors, color('#00f'));
-    sky_colors = blues.slice(0, 2);
-    var yellows = color_sort(colors, color('#ff0'));
-    sky_colors.concat(yellows.slice(0, 2));
-
-
+var get_sky = function(name, horizon, palette) {
     var skies = {
         'gradient': gradient_sky,
         'block': block_sky,
     };
     var choice = selecter(skies, name);
-    return choice(horizon, sky_colors);
+    return choice(horizon, palette);
 };
 
-var gradient_sky = function(horizon, colors) {
+var gradient_sky = function(horizon, palette) {
+    // select blues, yellows for the sky
+    var blues = color_sort(palette, color('#00f'));
+    var colors = blues.slice(0, 2);
+    var yellows = color_sort(palette, color('#ff0'));
+    colors.concat(yellows.slice(0, 2));
+
     var points = [];
     var bucket_size = horizon / colors.length + (horizon / Math.pow(colors.length, 1.7));
     for (var y = 0; y < horizon; y++) {
@@ -36,10 +35,15 @@ var gradient_sky = function(horizon, colors) {
     return {points: points};
 };
 
-var block_sky = function(horizon, colors) {
-    return {rects:
-        [new Rect(0, 0, horizon, width, colors[0])],
-    };
+var block_sky = function(horizon, palette) {
+    var blues = color_sort(palette, color('#00f'));
+    colors = blues.slice(0, 2);
+
+    shapes = [
+        {rects: [new Rect(0, 0, horizon, width, colors[0])]},
+        moon(horizon, palette),
+    ];
+    return shapes;
 };
 
 var moon = function(horizon, palette) {

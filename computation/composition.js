@@ -37,7 +37,14 @@ var layered_composition = function(horizon) {
 
     layers.push(function(x, height) {
         return {
-            position: {x: x, y: horizon + ((height - horizon) / 2)},
+            position: {x: x, y: horizon + ((height - horizon) * 0.25)},
+            scale: 1,
+        };
+    });
+
+    layers.push(function(x, height) {
+        return {
+            position: {x: x, y: horizon + ((height - horizon) * 0.75)},
             scale: 1,
         };
     });

@@ -9,6 +9,7 @@ var get_composition = function(name, horizon) {
         'flat': flat_composition,
         'hill': hill_composition,
         'onepoint': one_point_composition,
+        'coastline': coastline_composition,
     };
     var choice = selecter(options, name);
     return choice(horizon);
@@ -26,6 +27,21 @@ var one_point_composition = function(horizon) {
             };
         }
     ];
+};
+
+
+var coastline_composition = function(horizon) {
+    var function_builder = function(offset) {
+        return function(x) {
+            var scaler = log(x + 1)/log(2) / (log(width) / log(2));
+            return {
+                position: {x: x, y: horizon + (width * 0.1) - (scaler * width * 0.1)},
+                scale: 0.3 + 1 - Math.pow(scaler, 1.8),
+            };
+        };
+    };
+
+    return layered_composition(horizon, function_builder, 3);
 };
 
 
@@ -125,7 +141,7 @@ var place_buildings = function (composition, palette) {
 
     for (var layer = 0; layer < composition.length; layer++) {
         var row = [];
-        for (var y = 0; y < width; y+=building_width - 1) {
+        for (var y = 0; y < width; y += building_width - 1) {
             var computed = composition[layer](y);
             var position = computed.position;
             var scale = computed.scale;

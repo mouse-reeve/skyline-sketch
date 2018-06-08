@@ -1,30 +1,35 @@
-var random_palette = function () {
+var get_palette = function (type, h, s, l) {
     // HSL 100
-    var options = [triadic, mono_palette, split_complementary];
-    return random(options)();
+    var options = {
+        'mono': mono_palette,
+        'triadic': triadic,
+        'split': split_complementary,
+    };
+    var choice = selecter(options, type);
+    return choice(h, s, l);
 };
 
-var mono_palette = function () {
+var mono_palette = function (h, s, l) {
     var colors = [];
 
-    var saturation = 20;
+    var saturation = s || 20;
     var shades = 3;
-    var hue = random(0, 100);
+    var base_hue = h || random(0, 100);
     for (var i = 0; i < shades; i++) {
         var lightness = 10 + 100 * ((i + 1) / (shades + 1));
         colors.push(
-            color(hue, saturation, lightness, 100)
+            color(base_hue, saturation, lightness, 100)
         );
     }
     return colors;
 };
 
-var split_complementary = function () {
+var split_complementary = function (h, s, l) {
     var colors = [];
 
-    var base_hue = random(0, 100);
-    var saturation = 20;
-    var lightness = 40;
+    var base_hue = h || random(0, 100);
+    var saturation = s || 20;
+    var lightness = l || 40;
 
     for (var i = -1; i <= 1; i++) {
         for (var j = 0; j < 2; j++) {
@@ -36,11 +41,11 @@ var split_complementary = function () {
     return colors;
 };
 
-var triadic = function() {
+var triadic = function(h, s, l) {
     var colors = [];
-    var base_hue = random(0, 100);
-    var saturation = 25;
-    var lightness = random(30, 60);
+    var base_hue = h || random(0, 100);
+    var saturation = s || 25;
+    var lightness = l || random(30, 60);
 
     for (var i = -1; i <= 1; i++) {
         for (var j = 0; j < 1 + Math.abs(i); j++) {

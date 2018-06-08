@@ -9,6 +9,9 @@ function setup() {
     var params = {};
     for (var i = 0; i < param_string.length; i++) {
         var pair = param_string[i].split('=');
+        if (parseInt(pair[1]) == pair[1]) {
+            pair[1] = parseInt(pair[1]);
+        }
         params[pair[0]] = pair[1];
     }
     var seed = params.seed || Math.floor(Math.random() * 10000);
@@ -32,11 +35,12 @@ function setup() {
     pop();
 
     // actual stuff
-    data.palette = random_palette();
+    data.palette = get_palette(params.palette, params.hue, params.saturation, params.lightness);
     data.horizon = get_horizon();
     data.composition = get_composition(params.composition, data.horizon);
     data.foreground = ocean(data.horizon, data.palette);
     data.sky = get_sky(params.sky, data.horizon, data.palette);
+
     data.moon = moon(data.horizon, data.palette);
     data.buildings = place_buildings(data.composition, data.palette);
     data.reflection = reflections(data.buildings, data.foreground);

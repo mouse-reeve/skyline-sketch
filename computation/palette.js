@@ -1,6 +1,6 @@
 var random_palette = function () {
     // HSL 100
-    var options = [triadic];//, mono_palette, split_complementary];
+    var options = [triadic, mono_palette, split_complementary];
     return random(options)();
 };
 

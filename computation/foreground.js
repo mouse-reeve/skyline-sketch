@@ -12,8 +12,8 @@ var ocean = function(horizon, palette) {
         ], base_color)
     ];
 
-    var v_scale = (height / 40);
-    for (var x = 0; x < width; x += v_scale) {
+    var v_scale = (height / 20);
+    for (var x = -2 * v_scale; x < width; x += v_scale) {
         for (var y = horizon; y < height; y += 5) {
             if (random() > 0.1) {
                 var scale = 9 / ((height - y) ** 0.5);
@@ -23,8 +23,8 @@ var ocean = function(horizon, palette) {
                 var wave_height = (scale) * random(3, 6);
 
                 shapes.push(new Shape([
-                    [x, y],
-                    [x, y + 1],
+                    [x + random(4), y + random(2)],
+                    [x + random(3), y + 1],
                     [x + (length / 2), y + wave_height],
                     [x + length, y + 1],
                     [x + length, y],

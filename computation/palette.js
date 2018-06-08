@@ -11,7 +11,7 @@ var mono_palette = function () {
     var shades = 3;
     var hue = random(0, 100);
     for (var i = 0; i < shades; i++) {
-        var lightness = 100 * ((i + 1) / (shades + 1));
+        var lightness = 10 + 100 * ((i + 1) / (shades + 1));
         colors.push(
             color(hue, saturation, lightness, 100)
         );

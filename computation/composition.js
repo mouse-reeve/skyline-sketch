@@ -8,9 +8,23 @@ var random_composition = function(horizon) {
     var options = [flat_composition];
     if (horizon < (height / 2)) {
         options.push(layered_composition);
+    } else {
+        options.push(one_point_composition);
     }
     return random(options)(horizon);
 }
+
+var one_point_composition = function(horizon) {
+    return [
+        function(x) {
+            var distance = (Math.abs((width / 2) - x) / (width / 2));
+            return {
+                position: {x: x, y: horizon + (horizon * distance * 0.5)},
+                scale: 0.3 + distance,
+            }
+        }
+    ];
+};
 
 var flat_composition = function(horizon) {
     return [

@@ -7,11 +7,11 @@ var random_palette = function () {
 var mono_palette = function () {
     var colors = [];
 
+    var saturation = 20;
     var shades = 3;
     var hue = random(0, 100);
-    var saturation = 20;
     for (var i = 0; i < shades; i++) {
-        var lightness = 30 + i * 25;
+        var lightness = 100 * ((i + 1) / (shades + 1));
         colors.push(
             color(hue, saturation, lightness, 100)
         );

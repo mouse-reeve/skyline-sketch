@@ -107,7 +107,7 @@ var reflections = function(buildings, water) {
 
 
 var place_buildings = function (composition, palette) {
-    var base_color = random(color_sort(palette, color('#f00')._getHue()).slice(0, 2));
+    var base_color = random(color_sort(palette, hue(color('#f00'))).slice(0, 2));
 
     var buildings = [];
     var building_width;

@@ -11,7 +11,7 @@ var random_sky = function(horizon, colors) {
 
 var gradient_sky = function(horizon, colors) {
     var points = [];
-    var bucket_size = horizon / colors.length + (horizon / (colors.length ** 1.7));
+    var bucket_size = horizon / colors.length + (horizon / Math.pow(colors.length, 1.7));
     for (var y = 0; y < horizon; y++) {
         for (var x = 0; x < width; x++) {
             var bucket = Math.floor((y / bucket_size) + (x * 0.0002));

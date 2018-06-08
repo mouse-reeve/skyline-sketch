@@ -5,17 +5,26 @@ var black;
 var white;
 
 function setup() {
-    var seed = Math.floor(Math.random() * 10000);
+    var param_string = window.location.search.substr(1).split('&');
+    var params = {};
+    for (var i = 0; i < param_string.length; i++) {
+        var pair = param_string[i].split('=');
+        params[pair[0]] = pair[1];
+    }
+    var seed = params.seed || Math.floor(Math.random() * 10000);
     randomSeed(seed);
     console.log(seed);
+
     var container = document.getElementById('skyline');
     var canvas = createCanvas(800, 400);
     canvas.parent(container);
 
     black = color(0);
     white = color(255);
+    // this is important
     colorMode(HSL, 100);
 
+    // 1px black outline around the canvas
     push();
     stroke(black);
     fill(white);
@@ -24,7 +33,7 @@ function setup() {
 
     // actual stuff
     data.palette = random_palette();
-    data.horizon = get_horizon(height);
+    data.horizon = get_horizon();
     data.composition = random_composition(data.horizon);
     data.foreground = ocean(data.horizon, data.palette);
     data.sky = random_sky(data.horizon, data.palette);

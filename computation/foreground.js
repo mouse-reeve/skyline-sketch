@@ -16,7 +16,7 @@ var ocean = function(horizon, palette) {
     for (var x = -2 * v_scale; x < width; x += v_scale) {
         for (var y = horizon; y < height; y += 5) {
             if (random() > 0.1) {
-                var scale = 9 / ((height - y) ** 0.5);
+                var scale = 9 / Math.pow((height - y), 0.5);
 
                 var poly_color = lerpColor(base_color, white, random(0.1, 0.5));
                 var length = scale * random(30, 150);

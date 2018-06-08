@@ -1,6 +1,6 @@
-var get_horizon = function(page_height) {
+var get_horizon = function() {
     var percent = random(0.40, 0.80);
-    return percent * page_height;
+    return percent * height;
 };
 
 var random_composition = function(horizon) {
@@ -12,7 +12,7 @@ var random_composition = function(horizon) {
         options.push(one_point_composition);
     }
     return random(options)(horizon);
-}
+};
 
 
 var one_point_composition = function(horizon) {
@@ -23,7 +23,7 @@ var one_point_composition = function(horizon) {
             return {
                 position: {x: x, y: horizon + (horizon * distance * 0.1)},
                 scale: 0.3 + distance,
-            }
+            };
         }
     ];
 };
@@ -56,13 +56,13 @@ var flat_composition = function(horizon) {
     };
 
     return layered_composition(horizon, function_builder, 4);
-}
+};
 
 
 var layered_composition = function(horizon, function_builder, count) {
     var layers = [];
     var spacing = height / count;
-    var count = 1 + (Math.ceil(height - horizon) / spacing);
+    count = 1 + (Math.ceil(height - horizon) / spacing);
 
     for (var i = 0; i < count; i++) {
         var offset = i * spacing;
@@ -70,7 +70,7 @@ var layered_composition = function(horizon, function_builder, count) {
     }
 
     return layers;
-}
+};
 
 
 var reflections = function(buildings, water) {
@@ -81,7 +81,7 @@ var reflections = function(buildings, water) {
 
     var get_chaos = function(y) {
         return chaos(building.w, 1 - (0.6 * ((building.y) / y)));
-    }
+    };
 
     for (var i = 0; i < row.length; i++) {
         var building = row[i];
@@ -103,7 +103,7 @@ var reflections = function(buildings, water) {
         ]);
 
         // wiggly bit part 2
-        for (var y = building.y - ref_height; y > building.y; y -= 2) {
+        for (y = building.y - ref_height; y > building.y; y -= 2) {
             vertices.push([building.x + get_chaos(y), y]);
             vertices.push([building.x, y - 1]);
         }
@@ -113,7 +113,7 @@ var reflections = function(buildings, water) {
     }
 
     return {shapes: shapes};
-}
+};
 
 
 var place_buildings = function (composition, palette) {
@@ -132,11 +132,11 @@ var place_buildings = function (composition, palette) {
 
             var new_color = lerpColor(base_color, black, 0.2 * layer);
             var building = simple_building(position.x, position.y, scale, new_color);
-            var building_width = building.w;
+            building_width = building.w;
             row.push(building);
         }
         buildings.push({rects: row});
     }
 
     return buildings;
-}
+};

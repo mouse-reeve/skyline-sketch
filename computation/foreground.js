@@ -1,0 +1,37 @@
+var ocean = function(horizon, palette) {
+    var greenest = color_sort(palette, hue(color('#0f0')))[0];
+    var bluest = color_sort(palette, hue(color('#00f')))[0];
+    var base_color = lerpColor(bluest, greenest, 0.1);
+
+    var shapes = [
+        new Shape([
+            [0, height],
+            [0, horizon],
+            [width, horizon],
+            [width, height],
+        ], base_color)
+    ];
+
+    var v_scale = (height / 40);
+    for (var x = 0; x < width; x += v_scale) {
+        for (var y = horizon; y < height; y += 5) {
+            if (random() > 0.1) {
+                var scale = 9 / ((height - y) ** 0.5);
+
+                var poly_color = lerpColor(base_color, white, random(0.1, 0.5));
+                var length = scale * random(30, 150);
+                var wave_height = (scale) * random(3, 6);
+
+                shapes.push(new Shape([
+                    [x, y],
+                    [x, y + 1],
+                    [x + (length / 2), y + wave_height],
+                    [x + length, y + 1],
+                    [x + length, y],
+                ], poly_color));
+            }
+        }
+    }
+
+    return {shapes: shapes};
+}

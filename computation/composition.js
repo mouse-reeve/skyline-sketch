@@ -14,17 +14,19 @@ var random_composition = function(horizon) {
     return random(options)(horizon);
 }
 
+
 var one_point_composition = function(horizon) {
     return [
         function(x) {
             var distance = (Math.abs((width / 2) - x) / (width / 2));
             return {
-                position: {x: x, y: horizon + (horizon * distance * 0.5)},
+                position: {x: x, y: horizon + (horizon * distance * 0.1)},
                 scale: 0.3 + distance,
             }
         }
     ];
 };
+
 
 var flat_composition = function(horizon) {
     return [
@@ -36,6 +38,7 @@ var flat_composition = function(horizon) {
         },
     ];
 };
+
 
 var layered_composition = function(horizon) {
     var layers = [];
@@ -59,9 +62,16 @@ var layered_composition = function(horizon) {
     return layers;
 }
 
-var reflections = function(buildings) {
+
+var reflections = function(buildings, water) {
     var row = buildings[buildings.length - 1].rects;
     var shapes = [];
+
+    var water_color = water.shapes[0].color;
+
+    var get_chaos = function(y) {
+        return chaos(building.w, 1 - (0.6 * ((building.y) / y)));
+    }
 
     for (var i = 0; i < row.length; i++) {
         var building = row[i];
@@ -72,10 +82,9 @@ var reflections = function(buildings) {
         ];
 
         // wiggly bit
-        for (var y = building.y; y < building.y - ref_height; y += 1) {
-            var chaos_factor = 1 - (0.9 * ((building.y) / y))
-            vertices.push(
-                [building.x + building.w + chaos(building.w, chaos_factor), y]);
+        for (var y = building.y; y < building.y - ref_height; y += 2) {
+            vertices.push([building.x + building.w - get_chaos(y), y]);
+            vertices.push([building.x + building.w, y + 1]);
         }
 
         vertices = vertices.concat([ // roof
@@ -84,13 +93,12 @@ var reflections = function(buildings) {
         ]);
 
         // wiggly bit part 2
-        for (var y = building.y - ref_height; y > building.y; y -= 1) {
-            var chaos_factor = 1 - (0.9 * ((building.y) / y))
-            vertices.push(
-                [building.x + chaos(building.w, chaos_factor), y]);
+        for (var y = building.y - ref_height; y > building.y; y -= 2) {
+            vertices.push([building.x + get_chaos(y), y]);
+            vertices.push([building.x, y - 1]);
         }
 
-        var new_color = lerpColor(building.color, white, 0.2);
+        var new_color = lerpColor(building.color, water_color, 0.1);
         shapes.push(new Shape(vertices, new_color));
     }
 
@@ -98,7 +106,9 @@ var reflections = function(buildings) {
 }
 
 
-var place_buildings = function (composition, colors) {
+var place_buildings = function (composition, palette) {
+    var base_color = random(color_sort(palette, color('#00f')._getHue()).slice(-2));
+
     var buildings = [];
     var building_width;
 
@@ -109,8 +119,8 @@ var place_buildings = function (composition, colors) {
             var position = computed.position;
             var scale = computed.scale;
 
-            var color = lerpColor(colors[2], black, 0.2 * layer);
-            var building = simple_building(position.x, position.y, scale, color);
+            var new_color = lerpColor(base_color, black, 0.2 * layer);
+            var building = simple_building(position.x, position.y, scale, new_color);
             var building_width = building.w;
             row.push(building);
         }

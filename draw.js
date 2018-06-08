@@ -1,34 +1,15 @@
-// interactivity
 var data = {};
-
-var set_palette = function () {
-    data.palette = random_palette();
-};
-
-var set_horizon = function () {
-    data.horizon = get_horizon(height);
-    set_sky();
-    set_composition();
-};
-
-var set_composition = function () {
-    data.composition = random_composition(data.horizon);
-    data.buildings = place_buildings(data.composition, data.palette);
-    data.reflection = reflections(data.buildings);
-};
-
-var set_sky = function () {
-    data.sky = random_sky(data.horizon, data.palette);
-};
-
 
 // actual drawing
 var black;
 var white;
 
 function setup() {
+    var seed = Math.floor(Math.random() * 10000);
+    randomSeed(seed);
+    console.log(seed);
     var container = document.getElementById('skyline');
-    var canvas = createCanvas(700, 400);//1165, 600);
+    var canvas = createCanvas(800, 400);
     canvas.parent(container);
 
     black = color(0);
@@ -41,16 +22,21 @@ function setup() {
     rect(0, 0, width - 1, height -1);
     pop();
 
-    set_palette();
-    set_horizon();
-    set_composition();
+    // actual stuff
+    data.palette = random_palette();
+    data.horizon = get_horizon(height);
+    data.composition = random_composition(data.horizon);
+    data.foreground = ocean(data.horizon, data.palette);
+    data.sky = random_sky(data.horizon, data.palette);
+    data.buildings = place_buildings(data.composition, data.palette);
+    data.reflection = reflections(data.buildings, data.foreground);
 
     noLoop();
 }
 
 function draw() {
-    console.log('drawing');
     draw_from_data(data.sky);
+    draw_from_data(data.foreground);
     if ('buildings' in data) {
         draw_from_data(data.buildings);
         draw_from_data(data.reflection);

@@ -1,6 +1,6 @@
 var random_palette = function () {
     // HSL 100
-    var options = [triadic, mono_palette, split_complementary];
+    var options = [triadic];//, mono_palette, split_complementary];
     return random(options)();
 };
 
@@ -39,8 +39,8 @@ var split_complementary = function () {
 var triadic = function() {
     var colors = [];
     var base_hue = random(0, 100);
-    var saturation = 20;
-    var lightness = 40;
+    var saturation = 25;
+    var lightness = random(30, 60);
 
     for (var i = -1; i <= 1; i++) {
         for (var j = 0; j < 1 + Math.abs(i); j++) {

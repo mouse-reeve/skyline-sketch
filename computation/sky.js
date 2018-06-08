@@ -1,3 +1,8 @@
+var random_sky = function(horizon, colors) {
+    var skies = [gradient_sky, block_sky];
+    return random(skies)(horizon, colors);
+};
+
 var gradient_sky = function(horizon, colors) {
     var points = [];
     var bucket_size = horizon / colors.length + (horizon / (colors.length ** 1.7));
@@ -17,5 +22,11 @@ var gradient_sky = function(horizon, colors) {
             }
         }
     }
-    return points;
+    return {points: points};
+};
+
+var block_sky = function(horizon, colors) {
+    return {rects: 
+        [new Rect(0, 0, horizon, width, colors[0])],
+    };
 };

@@ -1,6 +1,10 @@
 // interactivity
 var data = {};
 
+var set_palette = function () {
+    data.palette = random_palette();
+};
+
 var set_horizon = function () {
     data.horizon = get_horizon(height);
     set_sky();
@@ -12,13 +16,8 @@ var set_composition = function () {
     draw();
 };
 
-var set_palette = function () {
-    data.palette = random_palette();
-    draw();
-};
-
 var set_sky = function () {
-    data.sky = gradient_sky(data.horizon, data.palette);
+    data.sky = random_sky(data.horizon, data.palette);
     draw();
 };
 
@@ -36,12 +35,15 @@ function setup() {
     white = color(255);
     colorMode(HSL, 100);
 
+    set_palette();
+    set_horizon();
+
     noLoop();
 }
 
 function draw() {
     console.log('drawing');
-    draw_points(data.sky);
+    draw_from_data(data.sky);
     draw_palette();
 }
 
@@ -63,12 +65,27 @@ var draw_palette = function() {
     }
 };
 
-var draw_points = function(points) {
-    for (var i = 0; i < points.length; i++) {
-        var pixel = points[i];
-        push();
-        stroke(pixel.color);
-        point(pixel.x, pixel.y);
-        pop();
+var draw_from_data = function(image_data) {
+    // points
+    if (image_data.points) {
+        for (var i = 0; i < image_data.points.length; i++) {
+            var item = image_data.points[i];
+            push();
+            stroke(item.color);
+            point(item.x, item.y);
+            pop();
+        }
+    }
+
+    if (image_data.rects) {
+        // rects
+        for (var i = 0; i < image_data.rects.length; i++) {
+            var item = image_data.rects[i];
+            push();
+            noStroke();
+            fill(item.color);
+            rect(item.x, item.y, item.w, item.h);
+            pop();
+        }
     }
 };

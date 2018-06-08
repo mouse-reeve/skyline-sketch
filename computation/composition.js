@@ -146,7 +146,7 @@ var place_buildings = function (composition, palette) {
             var position = computed.position;
             var scale = computed.scale;
 
-            var new_color = lerpColor(base_color, black, 0.2 * layer);
+            var new_color = lerpColor(base_color, black, 0.1 * layer);
             var building = simple_building(position.x, position.y, scale, new_color);
             building_width = building.w;
             row.push(building);

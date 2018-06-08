@@ -36,3 +36,13 @@ var block_sky = function(horizon, colors) {
         [new Rect(0, 0, horizon, width, colors[0])],
     };
 };
+
+var moon = function(horizon, palette) {
+    var yellowest = color_sort(palette, color('#ff0'))[0];
+    var x = width * 0.8;
+    var y = horizon * 0.3;
+    var radius = height / 20;
+    var offset = random(1, 7);
+    return crescent(x, y, radius, offset, yellowest);
+};
+

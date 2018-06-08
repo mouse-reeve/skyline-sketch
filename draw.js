@@ -37,6 +37,7 @@ function setup() {
     data.composition = random_composition(data.horizon);
     data.foreground = ocean(data.horizon, data.palette);
     data.sky = random_sky(data.horizon, data.palette);
+    data.moon = moon(data.horizon, data.palette);
     data.buildings = place_buildings(data.composition, data.palette);
     data.reflection = reflections(data.buildings, data.foreground);
 
@@ -46,6 +47,7 @@ function setup() {
 function draw() {
     draw_from_data(data.sky);
     draw_from_data(data.foreground);
+    draw_from_data(data.moon);
     if ('buildings' in data) {
         draw_from_data(data.buildings);
         draw_from_data(data.reflection);
@@ -108,6 +110,14 @@ var draw_from_data = function(image_data) {
             beginShape();
             for (var v = 0; v < item.vertices.length; v++) {
                 vertex(item.vertices[v][0], item.vertices[v][1]);
+            }
+            if (item.contour !== undefined) {
+                beginContour();
+                for (var v = 0; v < item.contour.length; v++) {
+                    console.log(item.contour[v]);
+                    vertex(item.contour[v][0], item.contour[v][1]);
+                }
+                endContour();
             }
             endShape(CLOSE);
             pop();

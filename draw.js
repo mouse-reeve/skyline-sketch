@@ -8,17 +8,16 @@ var set_palette = function () {
 var set_horizon = function () {
     data.horizon = get_horizon(height);
     set_sky();
-    draw();
+    set_composition();
 };
 
 var set_composition = function () {
-    data.composition = get_composition();
-    draw();
+    data.composition = random_composition(data.horizon);
+    data.buildings = place_buildings(data.composition, data.palette);
 };
 
 var set_sky = function () {
     data.sky = random_sky(data.horizon, data.palette);
-    draw();
 };
 
 
@@ -37,6 +36,7 @@ function setup() {
 
     set_palette();
     set_horizon();
+    set_composition();
 
     noLoop();
 }
@@ -44,6 +44,10 @@ function setup() {
 function draw() {
     console.log('drawing');
     draw_from_data(data.sky);
+    if ('buildings' in data) {
+        console.log(data.buildings);
+        draw_from_data(data.buildings);
+    }
     draw_palette();
 }
 
@@ -67,7 +71,7 @@ var draw_palette = function() {
 
 var draw_from_data = function(image_data) {
     // points
-    if (image_data.points) {
+    if ('points' in image_data) {
         for (var i = 0; i < image_data.points.length; i++) {
             var item = image_data.points[i];
             push();
@@ -77,7 +81,7 @@ var draw_from_data = function(image_data) {
         }
     }
 
-    if (image_data.rects) {
+    if ('rects' in image_data) {
         // rects
         for (var i = 0; i < image_data.rects.length; i++) {
             var item = image_data.rects[i];

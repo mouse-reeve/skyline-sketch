@@ -15,4 +15,3 @@ class Rect {
         this.color = color;
     }
 }
-

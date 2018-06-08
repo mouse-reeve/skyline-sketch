@@ -1,5 +1,5 @@
 var get_horizon = function(page_height) {
-    var percent = random(0.20, 0.80);
+    var percent = random(0.40, 0.80);
     return percent * page_height;
 };
 
@@ -39,36 +39,22 @@ var flat_composition = function(horizon) {
 
 var layered_composition = function(horizon) {
     var layers = [];
-    var count = 2;
-    var spacing = (height - horizon) / (count + 1);
+    var spacing = height / 4;
+    var count = 1 + (Math.ceil(height - horizon) / spacing);
 
-    layers.push(function(x) {
-        return {
-            position: {x: x, y: horizon},
-            scale: 1,
+    var function_builder = function (offset) {
+        return function(x) {
+            return {
+                position: {x: x, y: horizon + offset},
+                scale: 1,
+            };
         };
-    });
+    };
 
-    layers.push(function(x) {
-        return {
-            position: {x: x, y: horizon + ((height - horizon) * 0.25)},
-            scale: 1,
-        };
-    });
-
-    layers.push(function(x) {
-        return {
-            position: {x: x, y: horizon + ((height - horizon) * 0.75)},
-            scale: 1,
-        };
-    });
-
-    layers.push(function(x) {
-        return {
-            position: {x: x, y: height},
-            scale: 1,
-        };
-    });
+    for (var i = 0; i < count; i++) {
+        var offset = i * spacing;
+        layers.push(function_builder(offset));
+    }
 
     return layers;
 }

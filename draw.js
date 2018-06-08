@@ -27,12 +27,18 @@ var white;
 
 function setup() {
     var container = document.getElementById('skyline');
-    var canvas = createCanvas(700, 300);//1165, 600);
+    var canvas = createCanvas(700, 400);//1165, 600);
     canvas.parent(container);
 
     black = color(0);
     white = color(255);
     colorMode(HSL, 100);
+
+    push();
+    stroke(black);
+    fill(white);
+    rect(0, 0, width - 1, height -1);
+    pop();
 
     set_palette();
     set_horizon();

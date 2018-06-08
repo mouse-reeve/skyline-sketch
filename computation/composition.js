@@ -5,7 +5,10 @@ var get_horizon = function(page_height) {
 
 var random_composition = function(horizon) {
     // determines the perspective lines on which buildings/etc are drawn
-    var options = [layered_composition, flat_composition];
+    var options = [flat_composition];
+    if (horizon < (height / 2)) {
+        options.push(layered_composition);
+    }
     return random(options)(horizon);
 }
 

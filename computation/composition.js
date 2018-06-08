@@ -117,7 +117,7 @@ var reflections = function(buildings, water) {
 
 
 var place_buildings = function (composition, palette) {
-    var reddest = color_sort(palette, hue(color('#f00')));
+    var reddest = color_sort(palette, color('#f00'));
     var base_color = random(reddest.slice(0, 2));
 
     var buildings = [];

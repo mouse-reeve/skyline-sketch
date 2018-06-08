@@ -1,6 +1,6 @@
 var ocean = function(horizon, palette) {
-    var greenest = color_sort(palette, hue(color('#0f0')))[0];
-    var bluest = color_sort(palette, hue(color('#00f')))[0];
+    var greenest = color_sort(palette, color('#0f0'))[0];
+    var bluest = color_sort(palette, color('#00f'))[0];
     var base_color = lerpColor(bluest, greenest, 0.1);
 
     var shapes = [
@@ -34,4 +34,4 @@ var ocean = function(horizon, palette) {
     }
 
     return {shapes: shapes};
-}
+};

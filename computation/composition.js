@@ -59,11 +59,51 @@ var layered_composition = function(horizon) {
     return layers;
 }
 
+var reflections = function(buildings) {
+    var row = buildings[buildings.length - 1].rects;
+    var shapes = [];
+
+    for (var i = 0; i < row.length; i++) {
+        var building = row[i];
+        var ref_height = building.h / 2;
+        var vertices = [ // base
+            [building.x, building.y],
+            [building.x + building.w, building.y],
+        ];
+
+        // wiggly bit
+        for (var y = building.y; y < building.y - ref_height; y += 1) {
+            var chaos_factor = 1 - (0.9 * ((building.y) / y))
+            vertices.push(
+                [building.x + building.w + chaos(building.w, chaos_factor), y]);
+        }
+
+        vertices = vertices.concat([ // roof
+            [building.x + building.w, building.y - ref_height],
+            [building.x, building.y - ref_height],
+        ]);
+
+        // wiggly bit part 2
+        for (var y = building.y - ref_height; y > building.y; y -= 1) {
+            var chaos_factor = 1 - (0.9 * ((building.y) / y))
+            vertices.push(
+                [building.x + chaos(building.w, chaos_factor), y]);
+        }
+
+        var new_color = lerpColor(building.color, white, 0.2);
+        shapes.push(new Shape(vertices, new_color));
+    }
+
+    return {shapes: shapes};
+}
+
+
 var place_buildings = function (composition, colors) {
     var buildings = [];
     var building_width;
 
     for (var layer = 0; layer < composition.length; layer++) {
+        var row = [];
         for (var y = 0; y < width; y+=building_width - 1) {
             var computed = composition[layer](y);
             var position = computed.position;
@@ -71,10 +111,11 @@ var place_buildings = function (composition, colors) {
 
             var color = lerpColor(colors[2], black, 0.2 * layer);
             var building = simple_building(position.x, position.y, scale, color);
-            buildings.push(building);
             var building_width = building.w;
+            row.push(building);
         }
+        buildings.push({rects: row});
     }
 
-    return {rects: buildings};
+    return buildings;
 }

@@ -15,3 +15,11 @@ class Rect {
         this.color = color;
     }
 }
+
+class Shape {
+    constructor(vertices, color) {
+        this.vertices = vertices;
+        this.color = color;
+    }
+}
+

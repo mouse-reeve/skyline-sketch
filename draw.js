@@ -14,6 +14,7 @@ var set_horizon = function () {
 var set_composition = function () {
     data.composition = random_composition(data.horizon);
     data.buildings = place_buildings(data.composition, data.palette);
+    data.reflection = reflections(data.buildings);
 };
 
 var set_sky = function () {
@@ -51,8 +52,8 @@ function draw() {
     console.log('drawing');
     draw_from_data(data.sky);
     if ('buildings' in data) {
-        console.log(data.buildings);
         draw_from_data(data.buildings);
+        draw_from_data(data.reflection);
     }
     draw_palette();
 }
@@ -76,7 +77,12 @@ var draw_palette = function() {
 };
 
 var draw_from_data = function(image_data) {
-    // points
+    if (Array.isArray(image_data)) {
+        for (var i = 0; i < image_data.length; i++) {
+            draw_from_data(image_data[i]);
+        }
+    }
+
     if ('points' in image_data) {
         for (var i = 0; i < image_data.points.length; i++) {
             var item = image_data.points[i];
@@ -88,13 +94,27 @@ var draw_from_data = function(image_data) {
     }
 
     if ('rects' in image_data) {
-        // rects
         for (var i = 0; i < image_data.rects.length; i++) {
             var item = image_data.rects[i];
             push();
             noStroke();
             fill(item.color);
             rect(item.x, item.y, item.w, item.h);
+            pop();
+        }
+    }
+
+    if ('shapes' in image_data) {
+        for (var i = 0; i < image_data.shapes.length; i++) {
+            var item = image_data.shapes[i];
+            push();
+            noStroke();
+            fill(item.color);
+            beginShape();
+            for (var v = 0; v < item.vertices.length; v++) {
+                vertex(item.vertices[v][0], item.vertices[v][1]);
+            }
+            endShape(CLOSE);
             pop();
         }
     }

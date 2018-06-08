@@ -14,7 +14,7 @@ var random_composition = function(horizon) {
 
 var flat_composition = function(horizon) {
     return [
-        function(x, height) {
+        function(x) {
             return {
                 position: {x: x, y: horizon},
                 scale: 1,
@@ -28,28 +28,28 @@ var layered_composition = function(horizon) {
     var count = 2;
     var spacing = (height - horizon) / (count + 1);
 
-    layers.push(function(x, height) {
+    layers.push(function(x) {
         return {
             position: {x: x, y: horizon},
             scale: 1,
         };
     });
 
-    layers.push(function(x, height) {
+    layers.push(function(x) {
         return {
             position: {x: x, y: horizon + ((height - horizon) * 0.25)},
             scale: 1,
         };
     });
 
-    layers.push(function(x, height) {
+    layers.push(function(x) {
         return {
             position: {x: x, y: horizon + ((height - horizon) * 0.75)},
             scale: 1,
         };
     });
 
-    layers.push(function(x, height) {
+    layers.push(function(x) {
         return {
             position: {x: x, y: height},
             scale: 1,
@@ -65,7 +65,7 @@ var place_buildings = function (composition, colors) {
 
     for (var layer = 0; layer < composition.length; layer++) {
         for (var y = 0; y < width; y+=building_width - 1) {
-            var computed = composition[layer](y, height);
+            var computed = composition[layer](y);
             var position = computed.position;
             var scale = computed.scale;
 

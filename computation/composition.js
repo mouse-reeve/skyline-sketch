@@ -5,9 +5,9 @@ var get_horizon = function(page_height) {
 
 var random_composition = function(horizon) {
     // determines the perspective lines on which buildings/etc are drawn
-    var options = [flat_composition];
+    var options = [hill_composition];
     if (horizon < (height / 2)) {
-        options.push(layered_composition);
+        options.push(flat_composition);
     } else {
         options.push(one_point_composition);
     }
@@ -16,9 +16,10 @@ var random_composition = function(horizon) {
 
 
 var one_point_composition = function(horizon) {
+    var focal_point = width / 2 + chaos(width / 2, 0.5);
     return [
         function(x) {
-            var distance = (Math.abs((width / 2) - x) / (width / 2));
+            var distance = (Math.abs(focal_point - x) / focal_point);
             return {
                 position: {x: x, y: horizon + (horizon * distance * 0.1)},
                 scale: 0.3 + distance,
@@ -28,23 +29,23 @@ var one_point_composition = function(horizon) {
 };
 
 
-var flat_composition = function(horizon) {
-    return [
-        function(x) {
+var hill_composition = function(horizon) {
+    var focal_point = width / 4;
+    var function_builder = function(offset) {
+        return function(x) {
+            var distance = 1 - Math.abs(focal_point - x) / (width - focal_point);
             return {
-                position: {x: x, y: horizon},
-                scale: 1,
+                position: {x: x, y: horizon + (horizon * distance * 0.1) + (offset / 6)},
+                scale: 0.3 + (distance) - (offset / (4 * height)),
             };
-        },
-    ];
+        };
+    };
+
+    return layered_composition(horizon, function_builder, 3);
 };
 
 
-var layered_composition = function(horizon) {
-    var layers = [];
-    var spacing = height / 4;
-    var count = 1 + (Math.ceil(height - horizon) / spacing);
-
+var flat_composition = function(horizon) {
     var function_builder = function (offset) {
         return function(x) {
             return {
@@ -53,6 +54,15 @@ var layered_composition = function(horizon) {
             };
         };
     };
+
+    return layered_composition(horizon, function_builder, 4);
+}
+
+
+var layered_composition = function(horizon, function_builder, count) {
+    var layers = [];
+    var spacing = height / count;
+    var count = 1 + (Math.ceil(height - horizon) / spacing);
 
     for (var i = 0; i < count; i++) {
         var offset = i * spacing;
@@ -107,7 +117,8 @@ var reflections = function(buildings, water) {
 
 
 var place_buildings = function (composition, palette) {
-    var base_color = random(color_sort(palette, hue(color('#f00'))).slice(0, 2));
+    var reddest = color_sort(palette, hue(color('#f00')));
+    var base_color = random(reddest.slice(0, 2));
 
     var buildings = [];
     var building_width;

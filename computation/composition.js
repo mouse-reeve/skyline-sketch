@@ -6,7 +6,6 @@ var get_horizon = function() {
 
 var get_composition = function(name, horizon) {
     var options = {
-        'flat': flat_composition,
         'hill': hill_composition,
         'onepoint': one_point_composition,
         'coastline': coastline_composition,
@@ -46,10 +45,10 @@ var coastline_composition = function(horizon) {
 
 
 var hill_composition = function(horizon) {
-    var focal_point = width / 4;
+    var focal_point = width * (random() > 0.5 ? 0.25 : 0.6);
     var function_builder = function(offset) {
         return function(x) {
-            var distance = 1 - Math.abs(focal_point - x) / (width - focal_point);
+            var distance = 1 - Math.abs(focal_point - x) / (0.8 * width);
             return {
                 position: {x: x, y: horizon + (horizon * distance * 0.1) + (offset / 6)},
                 scale: 0.3 + (distance) - (offset / (4 * height)),

@@ -1,5 +1,5 @@
 var get_horizon = function() {
-    var percent = random(0.40, 0.80);
+    var percent = random(0.50, 0.80);
     return percent * height;
 };
 
@@ -141,8 +141,8 @@ var place_buildings = function (composition, palette) {
 
     for (var layer = 0; layer < composition.length; layer++) {
         var row = [];
-        for (var y = 0; y < width; y += building_width - 1) {
-            var computed = composition[layer](y);
+        for (var x = 0; x < width; x += building_width - 1) {
+            var computed = composition[layer](x);
             var position = computed.position;
             var scale = computed.scale;
 

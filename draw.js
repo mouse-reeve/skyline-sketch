@@ -40,6 +40,7 @@ function setup() {
     data.composition = get_composition(params.composition, data.horizon);
     data.foreground = ocean(data.horizon, data.palette);
     data.sky = get_sky(params.sky, data.horizon, data.palette);
+    data.moutains = mountains(data.horizon, data.composition, data.palette);
 
     data.buildings = place_buildings(data.composition, data.palette);
     data.reflection = reflections(data.buildings, data.foreground);
@@ -49,6 +50,7 @@ function setup() {
 
 function draw() {
     draw_from_data(data.sky);
+    draw_from_data(data.moutains);
     draw_from_data(data.foreground);
     if ('buildings' in data) {
         draw_from_data(data.buildings);

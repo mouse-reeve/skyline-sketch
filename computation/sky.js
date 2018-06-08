@@ -1,12 +1,17 @@
-var random_sky = function(horizon, colors) {
-    var skies = [gradient_sky, block_sky];
+var get_sky = function(name, horizon, colors) {
     // select blues, yellows for the sky
     var blues = color_sort(colors, color('#00f'));
-
     sky_colors = blues.slice(0, 2);
     var yellows = color_sort(colors, color('#ff0'));
     sky_colors.concat(yellows.slice(0, 2));
-    return random(skies)(horizon, sky_colors);
+
+
+    var skies = {
+        'gradient': gradient_sky,
+        'block': block_sky,
+    };
+    var choice = selecter(skies, name);
+    return choice(horizon, sky_colors);
 };
 
 var gradient_sky = function(horizon, colors) {

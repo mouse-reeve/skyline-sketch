@@ -3,15 +3,15 @@ var get_horizon = function() {
     return percent * height;
 };
 
-var random_composition = function(horizon) {
-    // determines the perspective lines on which buildings/etc are drawn
-    var options = [hill_composition];
-    if (horizon < (height / 2)) {
-        options.push(flat_composition);
-    } else {
-        options.push(one_point_composition);
-    }
-    return random(options)(horizon);
+
+var get_composition = function(name, horizon) {
+    var options = {
+        'flat': flat_composition,
+        'hill': hill_composition,
+        'onepoint': one_point_composition,
+    };
+    var choice = selecter(options, name);
+    return choice(horizon);
 };
 
 

@@ -34,9 +34,9 @@ function setup() {
     // actual stuff
     data.palette = random_palette();
     data.horizon = get_horizon();
-    data.composition = random_composition(data.horizon);
+    data.composition = get_composition(params.composition, data.horizon);
     data.foreground = ocean(data.horizon, data.palette);
-    data.sky = random_sky(data.horizon, data.palette);
+    data.sky = get_sky(params.sky, data.horizon, data.palette);
     data.moon = moon(data.horizon, data.palette);
     data.buildings = place_buildings(data.composition, data.palette);
     data.reflection = reflections(data.buildings, data.foreground);
@@ -114,7 +114,6 @@ var draw_from_data = function(image_data) {
             if (item.contour !== undefined) {
                 beginContour();
                 for (var v = 0; v < item.contour.length; v++) {
-                    console.log(item.contour[v]);
                     vertex(item.contour[v][0], item.contour[v][1]);
                 }
                 endContour();

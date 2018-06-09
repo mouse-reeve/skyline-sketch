@@ -53,8 +53,8 @@ function draw() {
     draw_from_data(data.moutains);
     draw_from_data(data.foreground);
     if ('buildings' in data) {
-        draw_from_data(data.buildings);
         draw_from_data(data.reflection);
+        draw_from_data(data.buildings);
     }
     draw_palette();
 }

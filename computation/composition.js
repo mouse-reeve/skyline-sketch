@@ -35,7 +35,7 @@ var coastline_composition = function(horizon) {
             var scaler = log(x + 1)/log(2) / (log(width) / log(2));
             return {
                 position: {x: x, y: horizon + (width * 0.1) - (scaler * width * 0.1)},
-                scale: 0.3 + 1 - Math.pow(scaler, 1.8),
+                scale: Math.pow((1.5 - Math.pow(scaler, 1.8)), 1.5),
             };
         };
     };

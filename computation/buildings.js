@@ -1,5 +1,5 @@
 var simple_building = function(x, y, scale, color) {
-    var max_height = height / 3;
+    var max_height = height * 0.2;
     var scaled_height = max_height * scale;
     scaled_height += chaos(scaled_height, 0.1);
     var scaled_width = scaled_height * 0.7;

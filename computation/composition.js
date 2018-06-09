@@ -21,8 +21,8 @@ var one_point_composition = function(horizon) {
         function(x) {
             var distance = (Math.abs(focal_point - x) / focal_point);
             return {
-                position: {x: x, y: horizon + (horizon * distance * 0.1)},
-                scale: 0.3 + distance,
+                position: {x: x, y: horizon + (horizon * distance * 0.2)},
+                scale: 0.5 + distance,
             };
         }
     ];

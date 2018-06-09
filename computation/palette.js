@@ -13,10 +13,10 @@ var mono_palette = function (h, s, l) {
     var colors = [];
 
     var saturation = s || 20;
-    var shades = 3;
+    var shades = 5;
     var base_hue = h || random(0, 100);
     for (var i = 0; i < shades; i++) {
-        var lightness = 10 + 100 * ((i + 1) / (shades + 1));
+        var lightness = 30 + 50 * ((i + 1) / (shades + 1));
         colors.push(
             color(base_hue, saturation, lightness, 100)
         );

@@ -48,7 +48,7 @@ var hill_composition = function(horizon) {
     var focal_point = width * (random() > 0.5 ? 0.25 : 0.6);
     var function_builder = function(offset) {
         return function(x) {
-            var distance = 1 - Math.abs(focal_point - x) / (0.8 * width);
+            var distance = 1 - Math.abs(focal_point - x) / width;
             return {
                 position: {x: x, y: horizon + (horizon * distance * 0.1) + (offset / 6)},
                 scale: 0.3 + (distance) - (offset / (4 * height)),

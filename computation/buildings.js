@@ -1,24 +1,24 @@
 var simple_building = function(x, y, scale, color) {
-    var max_height = height * 0.2;
+    var max_height = height * 0.15;
     var scaled_height = max_height * scale;
     scaled_height += chaos(scaled_height, 0.1);
-    var scaled_width = scaled_height * 0.7;
+    var scaled_width = scaled_height * 1.2;
     scaled_width += chaos(scaled_width, 0.2);
 
     return new Rect(x, y, -1 * scaled_height, scaled_width, color);
 };
 
 var building_signature = function() {
-    var max_height = height * 0.5;
-    var max_width = max_height * 0.7;
+    var max_height = height * 0.2;
+    var max_width = height * 0.2;
     var building_width = 0;
     var signature = [];
-    for (var i = 0; i < random(1, 4); i++) {
-        var w = random(10, max_height/3);
+    for (var i = 0; i < random(2, 5); i++) {
+        var w = random(max_height * 0.1, max_height * 0.5);
         if (building_width + w > max_width) {
             break;
         }
-        var h = random(10, max_height);
+        var h = random(max_height * 0.2, max_height);
         signature.push({
             width: w,
             height: h,
@@ -35,10 +35,9 @@ var building_mirror = function(array) {
     return array.concat(mirrored.slice(1))
 }
 
-var building = function(x, y, scale, palette, signature) {
+var get_building = function(x, y, scale, base_color, signature) {
     signature = signature || building_signature();
-    var yellowest = color_sort(palette, color('#ff0'))[0]
-    var color_options = [yellowest, lerpColor(yellowest, black, 0.1), lerpColor(yellowest, white, 0.1)];
+    var color_options = [base_color, lerpColor(base_color, black, 0.1), lerpColor(base_color, white, 0.1)];
 
     var colors = [];
     // select colors to be mirrored
@@ -51,8 +50,8 @@ var building = function(x, y, scale, palette, signature) {
     var mirrored = building_mirror(signature);
     // iterate through the masses provided by the signature, then mirror them
     for (var i = 0; i < mirrored.length; i++) {
-        var w = mirrored[i].width;
-        var h = mirrored[i].height
+        var w = mirrored[i].width * scale;
+        var h = mirrored[i].height * scale;
         var mass_color = colors[i];
         var vertices = [[x, y], [x, y - h], [x + w, y - h], [x + w, y]];
         shapes.push(new Shape(vertices, mass_color));

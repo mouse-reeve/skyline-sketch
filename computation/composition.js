@@ -17,15 +17,19 @@ var get_composition = function(name, horizon) {
 
 var one_point_composition = function(horizon) {
     var focal_point = width / 2 + chaos(width / 2, 0.5);
-    return [
-        function(x) {
+    var function_builder = function(offset) {
+        return function(x) {
             var distance = (Math.abs(focal_point - x) / focal_point);
             return {
-                position: {x: x, y: horizon + (horizon * distance * 0.2)},
+                position: {x: x, y: horizon + (horizon * distance * 0.2) + (offset / 7)},
                 scale: 0.5 + distance,
             };
-        }
-    ];
+        };
+    };
+
+    var comp = layered_composition(horizon, function_builder, 3);
+    comp.landmark = focal_point / 2;
+    return comp;
 };
 
 
@@ -34,13 +38,15 @@ var coastline_composition = function(horizon) {
         return function(x) {
             var scaler = log(x + 1)/log(2) / (log(width) / log(2));
             return {
-                position: {x: x, y: horizon + (width * 0.1) - (scaler * width * 0.1)},
+                position: {x: x, y: horizon + (width * 0.1) - (scaler * width * 0.1) + (offset / 7)},
                 scale: Math.pow((1.5 - Math.pow(scaler, 1.8)), 1.5),
             };
         };
     };
 
-    return layered_composition(horizon, function_builder, 3);
+    var comp = layered_composition(horizon, function_builder, 3);
+    comp.landmark = width * 0.25;
+    return comp;
 };
 
 
@@ -56,7 +62,9 @@ var hill_composition = function(horizon) {
         };
     };
 
-    return layered_composition(horizon, function_builder, 3);
+    var comp = layered_composition(horizon, function_builder, 3);
+    comp.landmark = focal_point;
+    return comp;
 };
 
 
@@ -70,7 +78,10 @@ var flat_composition = function(horizon) {
         };
     };
 
-    return layered_composition(horizon, function_builder, 4);
+    var layers = horizon / (height * 0.05);
+    var comp = layered_composition(horizon, function_builder, layers);
+    comp.landmark = width * 0.25;
+    return comp;
 };
 
 
@@ -90,6 +101,9 @@ var layered_composition = function(horizon, function_builder, count) {
 
 var reflections = function(buildings, water) {
     var row = buildings[buildings.length - 1].rects;
+    if (!Array.isArray(row)) {
+        return [];
+    }
     var shapes = [];
 
     var water_color = water.shapes[0].color;
@@ -145,10 +159,17 @@ var place_buildings = function (composition, palette) {
             var position = computed.position;
             var scale = computed.scale;
 
-            var new_color = lerpColor(base_color, black, 0.1 * layer);
+            var new_color = lerpColor(base_color, black, 0.2 * layer);
+            new_color = lerpColor(base_color, black, random(0.05, 0.1));
             var building = simple_building(position.x, position.y, scale, new_color);
             building_width = building.w;
             row.push(building);
+
+        }
+        // add the landmark in the second row
+        if (layer == composition.length - 1) {
+            var landmark = composition[0](composition.landmark)
+            buildings.push(get_building(landmark.position.x, landmark.position.y - (height * 0.05), landmark.scale, lerpColor(base_color, white, 0.1)));
         }
         buildings.push({rects: row});
     }

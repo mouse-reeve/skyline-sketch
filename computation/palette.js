@@ -49,7 +49,7 @@ var triadic = function(h, s, l) {
     var lightness = l || random(30, 60);
 
     for (var i = -1; i <= 1; i++) {
-        for (var j = 0; j < 1 + Math.abs(i); j++) {
+        for (var j = 0; j < 2; j++) {
             var adjusted_lightness = lightness + (j * ((100 - lightness) * 0.4));
             colors.push(
                 color((base_hue + (i * (100 / 3))) % 100, saturation, adjusted_lightness)

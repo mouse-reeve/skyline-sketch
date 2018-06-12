@@ -1,7 +1,5 @@
 var mountains = function(horizon, composition, palette) {
-    var mountain_color = color_sort(palette, color('#f90'))[0];
-    var bluest = color_sort(palette, color('#00f'))[0];
-    mountain_color = lerpColor(mountain_color, bluest, 0.2);
+    var mountain_color = color_sort(palette, color('#00f'))[1];
     var shapes = [];
     var mountain_gap;
     for (var x = 0; x < width; x += mountain_gap) {

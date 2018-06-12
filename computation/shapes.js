@@ -27,7 +27,7 @@ class Shape {
 
 var crescent = function(x, y, radius, offset_value, fill_color) {
     var vertices = [];
-    var angle = TWO_PI / 20;//100;
+    var angle = TWO_PI / 40;
     for (var a = 0; a < TWO_PI; a += angle) {
         var sx = x + cos(a) * radius;
         var sy = y + sin(a) * radius;

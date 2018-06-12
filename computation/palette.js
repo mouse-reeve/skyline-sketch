@@ -29,7 +29,7 @@ var split_complementary = function (h, s, l) {
 
     var base_hue = h || random(0, 100);
     var saturation = s || 20;
-    var lightness = l || 40;
+    var lightness = l || 50;
 
     for (var i = -1; i <= 1; i++) {
         for (var j = 0; j < 2; j++) {
@@ -46,7 +46,7 @@ var triadic = function(h, s, l) {
     var colors = [];
     var base_hue = h || random(0, 100);
     var saturation = s || 25;
-    var lightness = l || random(30, 60);
+    var lightness = l || 40;
 
     for (var i = -1; i <= 1; i++) {
         for (var j = 0; j < 2; j++) {

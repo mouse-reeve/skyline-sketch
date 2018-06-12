@@ -159,8 +159,7 @@ var place_buildings = function (composition, palette) {
             var position = computed.position;
             var scale = computed.scale;
 
-            var new_color = lerpColor(base_color, black, 0.2 * layer);
-            new_color = lerpColor(base_color, black, random(0.05, 0.1));
+            var new_color = lighten(base_color, -1 * random(0.03, 0.05) * layer);
             var building = simple_building(position.x, position.y, scale, new_color);
             building_width = building.w;
             row.push(building);
@@ -169,7 +168,7 @@ var place_buildings = function (composition, palette) {
         // add the landmark in the second row
         if (layer == composition.length - 1) {
             var landmark = composition[0](composition.landmark)
-            buildings.push(get_building(landmark.position.x, landmark.position.y - (height * 0.05), landmark.scale, lerpColor(base_color, white, 0.1)));
+            buildings.push(get_building(landmark.position.x, landmark.position.y - (height * 0.05), landmark.scale, lighten(base_color, 0.1)));
         }
         buildings.push({rects: row});
     }

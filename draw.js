@@ -19,7 +19,7 @@ function setup() {
     console.log(seed);
 
     var container = document.getElementById('skyline');
-    var canvas = createCanvas(800, 400);
+    var canvas = createCanvas(1165, 600)
     canvas.parent(container);
 
     black = color(0);

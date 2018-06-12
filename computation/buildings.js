@@ -37,7 +37,7 @@ var building_mirror = function(array) {
 
 var get_building = function(x, y, scale, base_color, signature) {
     signature = signature || building_signature();
-    var color_options = [base_color, lerpColor(base_color, black, 0.1), lerpColor(base_color, white, 0.1)];
+    var color_options = [base_color, lighten(base_color, 0.1), lighten(base_color, -0.1)];
 
     var colors = [];
     // select colors to be mirrored

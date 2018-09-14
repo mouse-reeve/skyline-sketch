@@ -13,13 +13,16 @@ function setup() {
             pair[1] = parseInt(pair[1]);
         }
         params[pair[0]] = pair[1];
+        if (pair[1] !== undefined && form_params[i]) {
+            form_params[i].value = pair[1];
+        }
     }
     var seed = params.seed || Math.floor(Math.random() * 10000);
     randomSeed(seed);
     console.log(seed);
 
     var container = document.getElementById('skyline');
-    var canvas = createCanvas(1165, 600)
+    var canvas = createCanvas(800, 400);//1165, 600)
     canvas.parent(container);
 
     black = color(0);
@@ -40,7 +43,9 @@ function setup() {
     data.composition = get_composition(params.composition, data.horizon);
     data.foreground = ocean(data.horizon, data.palette);
     data.sky = get_sky(params.sky, data.horizon, data.palette);
-    data.moutains = mountains(data.horizon, data.composition, data.palette);
+    if (params.background == 'mountains') {
+        data.mountains = mountains(data.horizon, data.composition, data.palette);
+    }
 
     data.buildings = place_buildings(data.composition, data.palette);
     data.reflection = reflections(data.buildings, data.foreground);
@@ -50,7 +55,9 @@ function setup() {
 
 function draw() {
     draw_from_data(data.sky);
-    draw_from_data(data.moutains);
+    if (data.mountains) {
+        draw_from_data(data.mountains);
+    }
     draw_from_data(data.foreground);
     if ('buildings' in data) {
         draw_from_data(data.reflection);
@@ -127,3 +134,21 @@ var draw_from_data = function(image_data) {
         }
     }
 };
+
+function randomize() {
+    for (var i = 0; i < form_params.length; i++) {
+        var min = form_params[i].getAttribute('data-min');
+        var max = form_params[i].getAttribute('data-max');
+        var is_int = int(max) == float(max) && int(min) == float(min);
+        if (max && min) {
+            var value = random(float(min), float(max));
+            if (is_int) {
+                value = int(value);
+            } else {
+                value = float(value);
+                value = Math.round(value * 100) / 100.0;
+            }
+            form_params[i].value = value;
+        }
+    }
+}

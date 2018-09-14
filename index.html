@@ -18,6 +18,40 @@
 
 <div id="skyline"></div>
 
+<form name="form_params">
+    <label>Seed
+        <input type="number" value="" name="seed"
+        data-min="0" data-max="9999"></label><br>
+    <label>Background
+        <select name="background">
+            <option value="mountains">Mountains</option>
+            <option value="">None</option>
+        </select>
+        </label><br>
+    <label>Sky
+        <select name="sky">
+            <option value="gradient">Gradient</option>
+            <option value="block">Block</option>
+        </select>
+        </label><br>
+    <label>Composition
+        <select name="composition">
+            <option value="hill">Hill</option>
+            <option value="onepoint">Onepoint</option>
+            <option value="coastline">Coastline</option>
+        </select>
+        </label><br>
+    <label>Palette
+        <select name="palette">
+            <option value="mono">Mono</option>
+            <option value="triadic">Triadic</option>
+            <option value="split">split</option>
+        </select>
+        </label><br>
+    <input type="submit" value="load map">
+    <span onclick="randomize()">randomize</span>
+</form>
+
 </body>
 </html>
 

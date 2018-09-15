@@ -122,7 +122,7 @@ var reflections = function(buildings, water) {
 
         // wiggly bit
         for (var y = building.y; y < building.y - ref_height; y += 2) {
-            vertices.push([building.x + building.w - get_chaos(y), y]);
+            vertices.push([building.x + building.w - get_chaos(y), y, 4, 0]);
             vertices.push([building.x + building.w, y + 1]);
         }
 
@@ -133,7 +133,7 @@ var reflections = function(buildings, water) {
 
         // wiggly bit part 2
         for (y = building.y - ref_height; y > building.y; y -= 2) {
-            vertices.push([building.x + get_chaos(y), y]);
+            vertices.push([building.x + get_chaos(y), y, 4, 0]);
             vertices.push([building.x, y - 1]);
         }
 

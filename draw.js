@@ -50,11 +50,11 @@ function setup() {
     data.buildings = place_buildings(data.composition, data.palette);
     data.reflection = reflections(data.buildings, data.foreground);
 
-    noLoop();
+    // the gradient is too complex to re-render
+    draw_from_data(data.sky);
 }
 
 function draw() {
-    draw_from_data(data.sky);
     if (data.mountains) {
         draw_from_data(data.mountains);
     }
@@ -120,7 +120,22 @@ var draw_from_data = function(image_data) {
             fill(item.color);
             beginShape();
             for (var v = 0; v < item.vertices.length; v++) {
-                vertex(item.vertices[v][0], item.vertices[v][1]);
+                var vert = item.vertices[v];
+                var offsets = [vert[2] || 0, vert[3] || 0];
+                for (var j = 0; j < offsets.length; j++) {
+                    if (!offsets[j]) continue;
+
+                    if (vert.current_offset === undefined) {
+                        vert.current_offset = random(-1, 1);
+                        vert.direction = random(-1, 1);
+                    }
+                    if (Math.abs(vert.current_offset + vert.direction) > offsets[j]) {
+                        vert.direction *= -1;
+                    }
+                    vert.current_offset += vert.direction;
+                    offsets[j] = vert.current_offset;
+                }
+                vertex(vert[0] + offsets[0], vert[1] + offsets[1]);
             }
             if (item.contour !== undefined) {
                 beginContour();

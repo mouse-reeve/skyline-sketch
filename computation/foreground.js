@@ -25,7 +25,7 @@ var ocean = function(horizon, palette) {
                 shapes.push(new Shape([
                     [x + random(4), y + random(2)],
                     [x + random(3), y + 1],
-                    [x + (length / 2), y + wave_height, 0, 4],
+                    [x + (length / 2), y + wave_height, 0, wave_height],
                     [x + length, y + 1],
                     [x + length, y],
                 ], poly_color));

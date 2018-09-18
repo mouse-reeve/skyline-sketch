@@ -68,6 +68,7 @@ var get_building = function(x, y, scale, base_color, signature) {
 }
 
 var get_roof = function(x, y, radius) {
+    radius = 0;
     return dome(x, y, radius * 0.9, 2.5 * PI / 3 );
 };
 

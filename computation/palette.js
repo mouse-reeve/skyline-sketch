@@ -14,7 +14,8 @@ var mono_palette = function (h, s, l) {
 
     var saturation = s || 20;
     var shades = 5;
-    var base_hue = h || random(0, 100);
+
+    var base_hue = h || round(random(0, 100), 2);
     for (var i = 0; i < shades; i++) {
         var lightness = 30 + 50 * ((i + 1) / (shades + 1));
         colors.push(
@@ -27,7 +28,7 @@ var mono_palette = function (h, s, l) {
 var split_complementary = function (h, s, l) {
     var colors = [];
 
-    var base_hue = h || random(0, 100);
+    var base_hue = h || round(random(0, 100), 2);
     var saturation = s || 20;
     var lightness = l || 50;
 
@@ -44,7 +45,7 @@ var split_complementary = function (h, s, l) {
 
 var triadic = function(h, s, l) {
     var colors = [];
-    var base_hue = h || random(0, 100);
+    var base_hue = h || round(random(0, 100), 2);
     var saturation = s || 25;
     var lightness = l || 40;
 

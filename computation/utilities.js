@@ -15,3 +15,9 @@ var lighten = function(input_color, amount) {
         lightness(input_color) * (1 - amount)
     );
 };
+
+var round = function(input, sig_figs) {
+    // sig figs is the wrong word isn't it?
+    sig_figs = sig_figs || 0;
+    return Math.round(input * (10 ** sig_figs)) / (10 ** sig_figs);
+}

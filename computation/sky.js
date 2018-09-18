@@ -51,7 +51,7 @@ var moon = function(horizon, palette) {
     var x = width * 0.8;
     var y = horizon * 0.3;
     var radius = height / 20;
-    var offset = random(1, 7);
+    var offset = round(random(1, 7));
     return crescent(x, y, radius, offset, yellowest);
 };
 

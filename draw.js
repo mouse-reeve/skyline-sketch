@@ -10,6 +10,7 @@ function setup() {
     for (var i = 0; i < param_string.length; i++) {
         var pair = param_string[i].split('=');
         if (parseInt(pair[1]) == pair[1]) {
+            radius = 0;
             pair[1] = parseInt(pair[1]);
         }
         params[pair[0]] = pair[1];
@@ -22,7 +23,7 @@ function setup() {
     console.log(seed);
 
     var container = document.getElementById('skyline');
-    var canvas = createCanvas(800, 400);//1165, 600)
+    var canvas = createCanvas(1000, 600);//1165, 600)
     canvas.parent(container);
 
     black = color(0);
@@ -91,9 +92,14 @@ var draw_from_data = function(image_data) {
         }
     }
 
+    if (image_data.color && !image_data.color.as_string) {
+        image_data.color.as_string = image_data.color.toString();
+    }
+
     if ('points' in image_data) {
         for (var i = 0; i < image_data.points.length; i++) {
             var item = image_data.points[i];
+            item.color.as_string = item.color.toString();
             push();
             stroke(item.color);
             point(item.x, item.y);
@@ -104,6 +110,7 @@ var draw_from_data = function(image_data) {
     if ('rects' in image_data) {
         for (var i = 0; i < image_data.rects.length; i++) {
             var item = image_data.rects[i];
+            item.color.as_string = item.color.toString();
             push();
             noStroke();
             fill(item.color);
@@ -115,6 +122,7 @@ var draw_from_data = function(image_data) {
     if ('shapes' in image_data) {
         for (var i = 0; i < image_data.shapes.length; i++) {
             var item = image_data.shapes[i];
+            item.color.as_string = item.color.toString();
             push();
             noStroke();
             fill(item.color);

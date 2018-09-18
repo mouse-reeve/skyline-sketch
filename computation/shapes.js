@@ -29,8 +29,8 @@ var crescent = function(x, y, radius, offset_value, fill_color) {
     var vertices = [];
     var angle = TWO_PI / 40;
     for (var a = 0; a < TWO_PI; a += angle) {
-        var sx = x + cos(a) * radius;
-        var sy = y + sin(a) * radius;
+        var sx = Math.round(x + cos(a) * radius);
+        var sy = Math.round(y + sin(a) * radius);
         vertices.push([sx, sy]);
     }
 
@@ -40,8 +40,8 @@ var crescent = function(x, y, radius, offset_value, fill_color) {
         if (a < 3 * PI / 4 || a > 7 * PI / 4) {
             offset = -1 * offset_value;
         }
-        var sx = x + offset + cos(a) * radius;
-        var sy = y + offset + sin(a) * radius;
+        var sx = Math.round(x + offset + cos(a) * radius);
+        var sy = Math.round(y + offset + sin(a) * radius);
         contour_vertices.push([sx, sy]);
     }
     return {shapes: [new Shape(vertices, fill_color, contour_vertices)]};

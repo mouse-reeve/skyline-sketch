@@ -46,6 +46,8 @@ function setup() {
     data.sky = get_sky(params.sky, data.horizon, data.palette);
     if (params.background == 'mountains') {
         data.mountains = mountains(data.horizon, data.composition, data.palette);
+    } else if (params.background == 'hills') {
+        data.hills = hills(data.horizon, data.composition, data.palette);
     }
 
     if (params.clouds == 'clouds') {
@@ -61,6 +63,9 @@ function draw() {
     draw_from_data(data.sky);
     if (data.mountains) {
         draw_from_data(data.mountains);
+    }
+    if (data.hills) {
+        draw_from_data(data.hills);
     }
     if (data.clouds) {
         draw_from_data(data.clouds);
@@ -161,6 +166,23 @@ var draw_from_data = function(image_data) {
                 endContour();
             }
             endShape(CLOSE);
+            pop();
+        }
+    }
+
+    if ('beziers' in image_data) {
+        for (var i = 0; i < image_data.beziers.length; i++) {
+            var item = image_data.beziers[i];
+            item.color.as_string = item.color.toString();
+            push();
+            noStroke();
+            fill(item.color);
+
+            bezier_fields = [];
+            for (var v = 0; v < item.points.length; v++) {
+                bezier_fields = bezier_fields.concat(item.points[v]);
+            }
+            bezier(...bezier_fields);
             pop();
         }
     }

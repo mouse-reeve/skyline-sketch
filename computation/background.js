@@ -20,6 +20,31 @@ var mountains = function(horizon, composition, palette) {
     return {shapes: shapes};
 };
 
+var hills = function(horizon, composition, palette) {
+    var hill_color = color_sort(palette, color('#0f0'));
+    var shapes = [];
+    var hill_gap;
+    for (var x = 0; x < width * 1.1; x += hill_gap) {
+        var base = horizon * 1.1;
+        base += chaos(base, 0.2);
+        var hill_height = (horizon * 0.7);
+        hill_height += chaos(hill_height, 0.2);
+        var vertices = [
+            [x - base, horizon], // anchor
+            [x + (base * 0.4), horizon - hill_height], // control
+            [x - (base * 0.4), horizon - hill_height], // control
+            [x + base, horizon], // anchor
+        ];
+        hill_gap = base * 0.8;
+        fill_color = x === 0 || x + hill_gap >= width * 1.1 ? hill_color[0] : hill_color[1];
+        shapes.push(new Bezier(vertices, fill_color));
+    }
+    // move the first item to the end so it will be layered on top
+    shapes.splice(0, 0, shapes.pop());
+    shapes.reverse();
+    return {beziers: shapes};
+};
+
 var clouds = function(horizon, composition, palette) {
     var lightbluest = color_sort(palette, color('#00f'))[1];
     lightbluest.setAlpha(80);

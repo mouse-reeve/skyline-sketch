@@ -24,6 +24,13 @@ class Shape {
     }
 }
 
+class Bezier {
+    constructor(points, fill_color) {
+        this.points = points;
+        this.color = fill_color;
+    }
+}
+
 var star_shape = function(x, y, radius, points, point_radius, fill_color, movement) {
     var vertices = [];
 

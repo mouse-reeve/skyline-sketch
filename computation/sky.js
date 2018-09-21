@@ -61,7 +61,7 @@ var stars = function(horizon, palette) {
     var h = 5;
     var w = 2;
     var shimmer = 5;
-    var star_list = []
+    var star_list = [];
     for (var i = 0; i < 3; i++) {
         var x = width * random();
         var y = horizon * random();
@@ -93,8 +93,8 @@ var sun = function(horizon, palette) {
     var yellowest = color_sort(palette, color('#ff0'))[0];
     var reds = color_sort(palette, color('#f00'));
     var radius = 60;
-    var x = width * 0.4;
-    var y = horizon * 0.2;
+    var x = width * 0.6;
+    var y = horizon * 0.25;
 
     var shapes = [
         ring(x + radius * 1.1, y + radius * 1.1, radius * 0.12, radius * 0.13, reds[1]),
@@ -107,5 +107,4 @@ var sun = function(horizon, palette) {
         star_shape(x, y, radius * 0.2, 45, radius * 0.9, yellowest, 10),
     ];
     return {shapes: shapes};
-
-}
+};

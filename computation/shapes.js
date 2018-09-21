@@ -24,7 +24,7 @@ class Shape {
     }
 }
 
-var star_shape = function(x, y, radius, points, point_radius, fill_color) {
+var star_shape = function(x, y, radius, points, point_radius, fill_color, movement) {
     var vertices = [];
 
     var angle = TWO_PI / points;
@@ -35,7 +35,7 @@ var star_shape = function(x, y, radius, points, point_radius, fill_color) {
 
         sx = Math.round(x + cos(a + (angle / 2)) * point_radius);
         sy = Math.round(y + sin(a + (angle / 2)) * point_radius);
-        vertices.push([sx, sy]);
+        vertices.push([sx, sy, movement, movement]);
     }
     return new Shape(vertices, fill_color);
 };

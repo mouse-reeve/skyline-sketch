@@ -129,6 +129,8 @@ var draw_from_data = function(image_data) {
             for (var v = 0; v < item.vertices.length; v++) {
                 var vert = item.vertices[v];
                 var offsets = [vert[2] || 0, vert[3] || 0];
+
+                // animation
                 for (var j = 0; j < offsets.length; j++) {
                     if (!offsets[j]) continue;
 

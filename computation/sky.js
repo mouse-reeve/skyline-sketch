@@ -1,7 +1,7 @@
 var get_sky = function(name, horizon, palette) {
     var skies = {
         'gradient': gradient_sky,
-        'block': block_sky,
+        'night': night_sky,
     };
     var choice = selecter(skies, name);
     return choice(horizon, palette);
@@ -35,13 +35,14 @@ var gradient_sky = function(horizon, palette) {
     return {points: points};
 };
 
-var block_sky = function(horizon, palette) {
+var night_sky = function(horizon, palette) {
     var blues = color_sort(palette, color('#00f'));
     colors = blues.slice(0, 2);
 
     shapes = [
         {rects: [new Rect(0, 0, horizon, width, colors[0])]},
         moon(horizon, palette),
+        stars(horizon, palette),
     ];
     return shapes;
 };
@@ -53,5 +54,28 @@ var moon = function(horizon, palette) {
     var radius = height / 20;
     var offset = round(random(1, 7));
     return crescent(x, y, radius, offset, yellowest);
+};
+
+var stars = function(horizon, palette) {
+    var yellowest = color_sort(palette, color('#ff0'))[0];
+    var h = 5;
+    var w = 2;
+    var shimmer = 5;
+    var star_list = []
+    for (var i = 0; i < 3; i++) {
+        var x = width * random();
+        var y = horizon * random();
+        star_list.push(new Shape([
+            [x + w, y, w / 2],
+            [x + 1, y - 1],
+            [x, y + h, 0, h / 2],
+            [x - 1, y + 1],
+            [x - w, y, w / 2],
+            [x - 1, y - 1],
+            [x, y - h, 0, h / 2],
+            [x + 1, y + 1],
+        ], yellowest));
+    }
+    return {shapes: star_list};
 };
 

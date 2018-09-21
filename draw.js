@@ -23,7 +23,7 @@ function setup() {
     console.log(seed);
 
     var container = document.getElementById('skyline');
-    var canvas = createCanvas(1000, 600);//1165, 600)
+    var canvas = createCanvas(1000, 500);//1165, 600)
     canvas.parent(container);
 
     black = color(0);
@@ -51,11 +51,10 @@ function setup() {
     data.buildings = place_buildings(data.composition, data.palette);
     data.reflection = reflections(data.buildings, data.foreground);
 
-    // the gradient is too complex to re-render
-    draw_from_data(data.sky);
 }
 
 function draw() {
+    draw_from_data(data.sky);
     if (data.mountains) {
         draw_from_data(data.mountains);
     }

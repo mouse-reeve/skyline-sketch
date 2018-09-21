@@ -24,6 +24,39 @@ class Shape {
     }
 }
 
+var star_shape = function(x, y, radius, points, point_radius, fill_color) {
+    var vertices = [];
+
+    var angle = TWO_PI / points;
+    for (var a = 0; a < TWO_PI; a += angle) {
+        var sx = Math.round(x + cos(a) * radius);
+        var sy = Math.round(y + sin(a) * radius);
+        vertices.push([sx, sy]);
+
+        sx = Math.round(x + cos(a + (angle / 2)) * point_radius);
+        sy = Math.round(y + sin(a + (angle / 2)) * point_radius);
+        vertices.push([sx, sy]);
+    }
+    return new Shape(vertices, fill_color);
+};
+
+var ring = function(x, y, radius, outer_radius, fill_color) {
+    var vertices = [];
+    var angle = TWO_PI / 40;
+    for (var a = 0; a < TWO_PI; a += angle) {
+        var sx = Math.round(x + cos(a) * radius);
+        var sy = Math.round(y + sin(a) * radius);
+        vertices.push([sx, sy]);
+    }
+
+    var contour_vertices = [];
+    for (var a = TWO_PI; a > 0; a -= angle) {
+        var sx = Math.round(x + cos(a) * outer_radius);
+        var sy = Math.round(y + sin(a) * outer_radius);
+        contour_vertices.push([sx, sy]);
+    }
+    return new Shape(vertices, fill_color, contour_vertices);
+};
 
 var crescent = function(x, y, radius, offset_value, fill_color) {
     var vertices = [];

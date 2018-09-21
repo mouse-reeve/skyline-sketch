@@ -1,5 +1,5 @@
 var get_horizon = function() {
-    var percent = random(0.50, 0.80);
+    var percent = 0.6;
     return percent * height;
 };
 

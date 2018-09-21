@@ -48,6 +48,10 @@ function setup() {
         data.mountains = mountains(data.horizon, data.composition, data.palette);
     }
 
+    if (params.clouds == 'clouds') {
+        data.clouds = clouds(data.horizon, data.composition, data.palette);
+    }
+
     data.buildings = place_buildings(data.composition, data.palette);
     data.reflection = reflections(data.buildings, data.foreground);
 
@@ -57,6 +61,9 @@ function draw() {
     draw_from_data(data.sky);
     if (data.mountains) {
         draw_from_data(data.mountains);
+    }
+    if (data.clouds) {
+        draw_from_data(data.clouds);
     }
     draw_from_data(data.foreground);
     if ('buildings' in data) {

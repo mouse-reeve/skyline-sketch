@@ -62,7 +62,7 @@ var stars = function(horizon, palette) {
     var w = 2;
     var shimmer = 5;
     var star_list = [];
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 13; i++) {
         var x = width * random();
         var y = horizon * random();
         star_list.push(new Shape([

@@ -2,7 +2,7 @@ var mountains = function(horizon, composition, palette) {
     var mountain_color = color_sort(palette, color('#00f'))[1];
     var shapes = [];
     var mountain_gap;
-    for (var x = 0; x < width; x += mountain_gap) {
+    for (var x = 0; x < width * 1.1; x += mountain_gap) {
         // mountains scale inversely to the line of the buildings, for e f f e c t
         var scale = 1 / Math.pow(3 * composition[0](x).scale, 0.4);
         var base = horizon * 0.8 * scale;

@@ -47,7 +47,8 @@ var hills = function(horizon, composition, palette) {
 
 var clouds = function(horizon, composition, palette) {
     var lightbluest = color_sort(palette, color('#00f'))[1];
-    lightbluest.setAlpha(80);
+    var fillcolor = color(lightbluest.toString());
+    fillcolor.setAlpha(80);
 
     var shapes = [];
     for (var i = 0; i < 3; i++) {
@@ -79,7 +80,7 @@ var clouds = function(horizon, composition, palette) {
             vertices.push([sx, sy]);
         }
 
-        shapes.push(new Shape(vertices, lightbluest));
+        shapes.push(new Shape(vertices, fillcolor));
     }
 
     return {shapes: shapes};

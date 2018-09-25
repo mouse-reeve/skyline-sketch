@@ -64,7 +64,7 @@ var stars = function(horizon, palette) {
     var star_list = [];
     for (var i = 0; i < 13; i++) {
         var x = width * random();
-        var y = horizon * random();
+        var y = horizon * 0.5 * random();
         star_list.push(new Shape([
             [x + w, y, w / 2],
             [x + 1, y - 1],

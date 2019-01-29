@@ -1,8 +1,8 @@
 var get_foreground = function(name, horizon, palette) {
     var foregrounds = {
+        'dirt': dirt,
         'ocean': ocean,
         'forest': forest,
-        'dirt': dirt,
     };
     var choice = selecter(foregrounds, name);
     return choice(horizon, palette);

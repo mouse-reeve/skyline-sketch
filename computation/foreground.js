@@ -1,3 +1,13 @@
+var get_foreground = function(name, horizon, palette) {
+    var foregrounds = {
+        'ocean': ocean,
+        'forest': forest,
+        'dirt': dirt,
+    };
+    var choice = selecter(foregrounds, name);
+    return choice(horizon, palette);
+};
+
 var ocean = function(horizon, palette) {
     var greenest = color_sort(palette, color('#0f0'))[0];
     var bluest = color_sort(palette, color('#00f'))[0];
@@ -35,3 +45,28 @@ var ocean = function(horizon, palette) {
 
     return {shapes: shapes};
 };
+
+var forest = function(horizon, palette) {
+    var shapes = [];
+    var tree_size = 80;
+
+    for (var y = horizon + (horizon / 3); y < height + (tree_size / 5.5); y += tree_size / 10 + 30) {
+        for (var x = 0 - (tree_size / 2); x < width + tree_size; x+=random(tree_size * 0.5, tree_size * 1)) {
+            shapes = shapes.concat(
+                pine_tree(
+                    x,
+                    y + random(height / -30, height / 30),
+                    tree_size * (y / height)**5,
+                    palette
+                )
+            );
+        }
+    }
+    return {shapes: shapes};
+}
+
+var dirt = function(horizon, palette) {
+    var red = color_sort(palette, color('#f00'))[1];
+    return {rects: [new Rect(0, horizon, height, width, red)]};
+};
+

@@ -42,7 +42,9 @@ function setup() {
     data.palette = get_palette(params.palette, params.hue, params.saturation, params.lightness);
     data.horizon = get_horizon();
     data.composition = get_composition(params.composition, data.horizon);
-    data.foreground = ocean(data.horizon, data.palette);
+    data.foreground = get_foreground('forest', data.horizon, data.palette);
+    data.ground = get_foreground('dirt', data.horizon, data.palette);
+    //data.ground = get_foreground('ocean', data.horizon, data.palette);
     data.sky = get_sky(params.sky, data.horizon, data.palette);
     if (params.background == 'mountains') {
         data.mountains = mountains(data.horizon, data.composition, data.palette);
@@ -55,7 +57,9 @@ function setup() {
     }
 
     data.buildings = place_buildings(data.composition, data.palette);
-    data.reflection = reflections(data.buildings, data.foreground);
+    if (data.foreground) { // TODO; should only be for ocean
+        data.reflection = reflections(data.buildings, data.foreground);
+    }
 
 }
 
@@ -70,10 +74,17 @@ function draw() {
     if (data.clouds) {
         draw_from_data(data.clouds);
     }
-    draw_from_data(data.foreground);
+    if (data.ground) {
+        draw_from_data(data.ground);
+    }
     if ('buildings' in data) {
-        draw_from_data(data.reflection);
+        if (data.reflection) {
+            draw_from_data(data.reflection);
+        }
         draw_from_data(data.buildings);
+    }
+    if (data.foreground) {
+        draw_from_data(data.foreground);
     }
     draw_palette();
 }

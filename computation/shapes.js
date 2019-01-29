@@ -47,6 +47,18 @@ var star_shape = function(x, y, radius, points, point_radius, fill_color, moveme
     return new Shape(vertices, fill_color);
 };
 
+var polygon = function(x, y, radius, points, fill_color, movement) {
+    var vertices = [];
+
+    var angle = TWO_PI / points;
+    for (var a = 0; a < TWO_PI; a += angle) {
+        var sx = Math.round(x + cos(a) * radius);
+        var sy = Math.round(y + sin(a) * radius);
+        vertices.push([sx, sy, movement, movement]);
+    }
+    return new Shape(vertices, fill_color);
+};
+
 var ring = function(x, y, radius, outer_radius, fill_color) {
     var vertices = [];
     var angle = TWO_PI / 40;

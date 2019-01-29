@@ -14,6 +14,7 @@
 <script src="computation/sky.js"></script>
 <script src="computation/background.js"></script>
 <script src="computation/foreground.js"></script>
+<script src="computation/trees.js"></script>
 <script src="draw.js"></script>
 
 <div id="skyline"></div>
@@ -37,7 +38,6 @@
         </label><br>
     <label>Sky
         <select name="sky">
-            <option value="gradient">gradient</option>
             <option value="night">night</option>
             <option value="day">day</option>
         </select>
@@ -66,7 +66,7 @@
         <input type="number" value="50" name="lightness"
         data-min="0" data-max="100">
         </label><br>
-    <input type="submit" value="load map">
+    <input type="submit" value="load skyline">
     <span onclick="randomize()">randomize</span>
 </form>
 

@@ -1,6 +1,5 @@
 var get_sky = function(name, horizon, palette) {
     var skies = {
-        'gradient': gradient_sky,
         'night': night_sky,
         'day': day_sky,
     };

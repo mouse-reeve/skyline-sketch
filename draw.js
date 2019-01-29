@@ -43,7 +43,7 @@ function setup() {
     data.horizon = get_horizon();
     data.composition = get_composition(params.composition, data.horizon);
 
-    if (data.foreground) {
+    if (params.foreground) {
         data.foreground = get_foreground(params.foreground, data.horizon, data.palette);
     }
     data.ground = get_foreground(params.ground, data.horizon, data.palette);
